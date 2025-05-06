@@ -6,10 +6,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-      call-reusable-workflow:
-  uses: ./.github/workflows/reusable-workflow.yml
-  with:
-    node: 14
+    
+  call-reusable-workflow:
+      strategy:
+        matrix:
+          nodeversion: [14, 16, 18, 20]
+      uses: ./.github/workflows/reusable-workflow.yml
+      with:
+        node: ${{ matrix.nodeversion }}
 
     steps:
       - uses: actions/checkout@v4
