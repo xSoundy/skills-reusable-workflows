@@ -6,34 +6,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-  call-reusable-workflow:
-      strategy:
-        matrix:
-          nodeversion: [14, 16, 18, 20]
-      uses: ./.github/workflows/reusable-workflow.yml
-      with:
-        node: ${{ matrix.nodeversion }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy to your project.
+  call-reusable-workflow:
+    strategy:
+      matrix:
+        nodeversion: [14, 16, 18, 20]
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      node: ${{ matrix.nodeversion }}
 
-      on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v3
-      - run: dotnet --version
-      - run: dotnet build
